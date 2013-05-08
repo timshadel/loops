@@ -8,5 +8,7 @@ var stack = require('simple-stack-common');
  */
 exports = module.exports = function(config) {
   var app = stack(config);
+
+  return app;
 }
 
