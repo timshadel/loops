@@ -1,13 +1,12 @@
 /**
  * Module dependencies.
  */
-var stack = require('simple-stack-api')
-  , errorHandler = require('./lib/errorHandler');
+var stack = require('simple-stack-common');
 
 /**
- * Expose the app
+ * Expose the app template
  */
-var app = module.exports = stack();
+exports = module.exports = function(config) {
+  var app = stack(config);
+}
 
-// Our own error handler
-app.replace('errorHandler', errorHandler());
