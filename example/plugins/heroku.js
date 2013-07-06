@@ -11,7 +11,7 @@ module.exports = function(opts) {
     var environments = app.callback('environments');
 
     function push(env, job, log, done) {
-      switchRemotes(env, job, function(err) {
+      updateRemotes(env, job, function(err) {
         if (err) return done(err);
 
         forceUpdate(job, function(err, sha) {
@@ -34,9 +34,9 @@ module.exports = function(opts) {
     };
 
     function promote(env, job, log, done) {
-      switchRemotes(env, job, function(err) {
+      updateRemotes(env, job, function(err) {
         if (err) return done(err);
-        // TODO use the api instead of the command
+        // TODO use the api instead of the cli
         var gpush = spawn('heroku', ['pipeline:promote'], {cwd: job.dir});
 
         gpush.stdout.setEncoding('utf8');
@@ -56,7 +56,7 @@ module.exports = function(opts) {
       environments(job, log, function(err, envs) {
         if (err) return done(err);
 
-        // TODO initialize repos if they don't exist
+        // TODO initialize apps if they don't exist in heroku
         done();      
       });
     });
@@ -75,11 +75,13 @@ module.exports = function(opts) {
   };
 };
 
-function switchRemotes (env, job, done) {
+function updateRemotes (env, job, done) {
+  // Remove any previous remotes
   exec('git remote rm heroku', {cwd: job.dir}, function(err, stdout, stderr) {
     // Ignore the error
     var remote = 'git@heroku.com:'+job.title+'-'+env+'.git';
 
+    // Add our current remote
     exec('git remote add heroku '+remote, {cwd: job.dir}, function(err, stdout, stderr) {
       if (err) return done(err);
       done();
@@ -88,8 +90,10 @@ function switchRemotes (env, job, done) {
 };
 
 function forceUpdate(job, done) {
+  // Force a new hash without changing the content
   exec('git commit --amend --no-edit', {cwd: job.dir}, function(err, stdout, stderr) {
     if (err) return done(err);
+    // Get our new hash
     exec('git rev-parse HEAD', {cwd: job.dir}, function(err, stdout, stderr) {
       if (err) return done(err);
       done(null, stdout);

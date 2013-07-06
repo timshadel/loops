@@ -7,10 +7,12 @@ var spawn = require('child_process').spawn
 
 module.exports = function(opts) {
 
+  var prefix = opts.prefix || '';
+
   return function(app) {
     app.parseWebhook(function(req, done) {
       done(null, {
-        title: req.body.repository.name,
+        title: prefix+req.body.repository.name,
         sha: req.body.after,
         author: req.body.pusher.name,
         repo: req.body.repository.url,
