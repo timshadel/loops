@@ -10,7 +10,8 @@
     "kue": "~0.6.2",
     "superagent": "~0.15.3",
     "redis": "~0.8.4",
-    "redisurl": "~0.1.1"
+    "redisurl": "~0.1.1",
+    "rimraf": "~2.2.0"
   },
   "devDependencies": {
     "mocha": "*",
