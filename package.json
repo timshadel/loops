@@ -1,10 +1,13 @@
 {
   "name": "loops",
   "version": "0.1.0",
-  "main": "app.js",
+  "main": "index.js",
   "dependencies": {
     "simple-stack-common": "~0.1.6",
-    "startup": "~0.1.12"
+    "websafe-uid": "~1.0.0",
+    "simple-debug": "~1.1.0",
+    "express": "~3.3.3",
+    "kue": "~0.6.2"
   },
   "devDependencies": {
     "mocha": "*",
