@@ -36,6 +36,7 @@ module.exports = function(opts) {
     function promote(env, job, log, done) {
       switchRemotes(env, job, function(err) {
         if (err) return done(err);
+        // TODO use the api instead of the command
         var gpush = spawn('heroku', ['pipeline:promote'], {cwd: job.dir});
 
         gpush.stdout.setEncoding('utf8');
