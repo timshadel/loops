@@ -31,10 +31,7 @@ module.exports = function(opts) {
       clone.on('close', function(code) {
         if (code !== 0) return done(new Error('git clone exited with status '+code));
 
-        exec('git checkout -b deploy '+job.sha, {
-          cwd: job.dir
-        }, function(err, stdout, stderr) {
-          log(stdout);
+        exec('git checkout -b deploy '+job.sha, {cwd: job.dir}, function(err, stdout, stderr) {
           if (err) return done(err);
           done();
         });

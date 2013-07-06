@@ -2,11 +2,16 @@
  * Module dependencies
  */
 
-var kue = require('kue');
+var kue = require('kue')
+  , redisurl = require('redisurl');
 
 module.exports = function(opts) {
 
-  var type = opts.type || 'build'
+  kue.redis.createClient = function() {
+    return redisurl(opts.redis);
+  };
+
+  var type = opts.type || 'deploy'
     , attempts = opts.attempts || 1
     , concurrency = opts.concurrency || 3
     , jobs = kue.createQueue();
