@@ -18,7 +18,7 @@ app.plugin(github({
 }));
 
 app.plugin(heroku({
-
+  key: process.env.HEROKU_KEY
 }));
 
 app.plugin(kue({

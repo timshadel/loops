@@ -7,7 +7,10 @@
     "websafe-uid": "~1.0.0",
     "simple-debug": "~1.1.0",
     "express": "~3.3.3",
-    "kue": "~0.6.2"
+    "kue": "~0.6.2",
+    "superagent": "~0.15.3",
+    "redis": "~0.8.4",
+    "redisurl": "~0.1.1"
   },
   "devDependencies": {
     "mocha": "*",
